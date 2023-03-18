@@ -24,8 +24,6 @@ root.render(
       position: [2.5, 4, 6],
     }}
   >
-    <Sky sunPosition={[-1, 0.1, 1]} />
-    <Environment preset='park' />
     <Experience />
   </Canvas>
 );

@@ -2,13 +2,7 @@ import React, { useRef, useState, useMemo } from 'react';
 import * as THREE from 'three';
 import { RigidBody, CuboidCollider } from '@react-three/rapier';
 import { useFrame } from '@react-three/fiber';
-import {
-  useGLTF,
-  Float,
-  SpotLight,
-  useDepthBuffer,
-  Cloud,
-} from '@react-three/drei';
+import { useGLTF, Float, useDepthBuffer } from '@react-three/drei';
 
 THREE.ColorManagement.legacyMode = false;
 
@@ -47,13 +41,6 @@ const BlockEnd = ({ position = [0, 0, 0] }) => {
   const depthBuffer = useDepthBuffer();
   return (
     <group position={position}>
-      <Cloud
-        opacity={0.5}
-        speed={0.07} // Rotation speed
-        width={16} // Width of the full cloud
-        depth={1.5} // Z-dir depth
-        segments={20} // Number of particles
-      />
       <mesh
         geometry={boxGeometry}
         material={floor1MAterial}
