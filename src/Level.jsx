@@ -2,7 +2,7 @@ import React, { useRef, useState, useMemo } from 'react';
 import * as THREE from 'three';
 import { RigidBody, CuboidCollider } from '@react-three/rapier';
 import { useFrame } from '@react-three/fiber';
-import { useGLTF, Float, useDepthBuffer } from '@react-three/drei';
+import { useGLTF, Float, useDepthBuffer, SpotLight } from '@react-three/drei';
 
 THREE.ColorManagement.legacyMode = false;
 
@@ -10,7 +10,7 @@ const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
 
 const floor1MAterial = new THREE.MeshStandardMaterial({ color: 'limegreen' });
 const floor2MAterial = new THREE.MeshStandardMaterial({ color: 'greenyellow' });
-const obstacleMaterial = new THREE.MeshStandardMaterial({ color: 'orangered' });
+const obstacleMaterial = new THREE.MeshStandardMaterial({ color: 'red' });
 const wallMaterial = new THREE.MeshStandardMaterial({ color: 'slategrey' });
 
 function Model(props) {

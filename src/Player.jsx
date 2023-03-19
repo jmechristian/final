@@ -5,14 +5,14 @@ import { useKeyboardControls } from '@react-three/drei';
 import * as THREE from 'three';
 
 const Player = () => {
+  const body = useRef();
   const [subscribeKeys, getKeys] = useKeyboardControls();
-
   const { rapier, world } = useRapier();
   const rapierWorld = world.raw();
-  const body = useRef();
-
-  const [smoothCameraPosition] = useState(() => new THREE.Vector3());
-  const [smoothCameraTarget] = useState(() => new THREE.Vector3());
+  const [smoothedCameraPosition] = useState(
+    () => new THREE.Vector3(10, 10, 10)
+  );
+  const [smoothedCameraTarget] = useState(() => new THREE.Vector3());
 
   const jump = () => {
     const origin = body.current.translation();
@@ -81,11 +81,11 @@ const Player = () => {
     cameraTarget.copy(bodyPosition);
     cameraTarget.y += 0.25;
 
-    smoothCameraPosition.lerp(cameraPosition, 0.1);
-    smoothCameraTarget.lerp(cameraTarget, 0.1);
+    smoothedCameraPosition.lerp(cameraPosition, 5 * delta);
+    smoothedCameraTarget.lerp(cameraTarget, 5 * delta);
 
-    state.camera.position.copy(smoothCameraPosition);
-    state.camera.lookAt(smoothCameraTargetw);
+    state.camera.position.copy(smoothedCameraPosition);
+    state.camera.lookAt(smoothedCameraTarget);
   });
 
   return (
