@@ -2,16 +2,32 @@ import React, { useRef, useState, useMemo } from 'react';
 import * as THREE from 'three';
 import { RigidBody, CuboidCollider } from '@react-three/rapier';
 import { useFrame } from '@react-three/fiber';
-import { useGLTF, Float, useDepthBuffer, SpotLight } from '@react-three/drei';
+import { useGLTF, Float, useDepthBuffer, Text } from '@react-three/drei';
 
 THREE.ColorManagement.legacyMode = false;
 
 const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
 
-const floor1MAterial = new THREE.MeshStandardMaterial({ color: 'limegreen' });
-const floor2MAterial = new THREE.MeshStandardMaterial({ color: 'greenyellow' });
-const obstacleMaterial = new THREE.MeshStandardMaterial({ color: 'red' });
-const wallMaterial = new THREE.MeshStandardMaterial({ color: 'slategrey' });
+const floor1MAterial = new THREE.MeshStandardMaterial({
+  color: '#111111',
+  metalness: 0,
+  roughness: 0,
+});
+const floor2MAterial = new THREE.MeshStandardMaterial({
+  color: '#222222',
+  metalness: 0,
+  roughness: 0,
+});
+const obstacleMaterial = new THREE.MeshStandardMaterial({
+  color: '#ff0000',
+  metalness: 0,
+  roughness: 1,
+});
+const wallMaterial = new THREE.MeshStandardMaterial({
+  color: '#887777s',
+  metalness: 0,
+  roughness: 0,
+});
 
 function Model(props) {
   const { scene } = useGLTF(
@@ -26,6 +42,20 @@ function Model(props) {
 const BlockStart = ({ position = [0, 0, 0] }) => {
   return (
     <group position={position}>
+      <Float floatIntensity={0.5} rotationIntensity={0.5}>
+        <Text
+          scale={0.4}
+          font='./bebas-neue-v9-latin-regular.woff'
+          maxWidth={0.25}
+          lineHeight={0.75}
+          textAlign='right'
+          position={[0.75, 0.65, 0]}
+          rotation-y={-0.25}
+        >
+          Marble Race
+          <meshBasicMaterial toneMapped={false} />
+        </Text>
+      </Float>
       <mesh
         geometry={boxGeometry}
         material={floor1MAterial}
@@ -41,6 +71,10 @@ const BlockEnd = ({ position = [0, 0, 0] }) => {
   const depthBuffer = useDepthBuffer();
   return (
     <group position={position}>
+      <Text font='./bebas-neue-v9-latin-regular.woff' position={[0, 2.25, 2]}>
+        FINISH
+        <meshBasicMaterial toneMapped={false} />
+      </Text>
       <mesh
         geometry={boxGeometry}
         material={floor1MAterial}
@@ -224,6 +258,7 @@ export const Bounds = ({ length = 1 }) => {
 export const Level = ({
   count = 5,
   types = [BlockAxe, BlockSpinner, BlockLimbo],
+  seed = 0,
 }) => {
   const blocks = useMemo(() => {
     const blocks = [];
@@ -234,7 +269,7 @@ export const Level = ({
     }
 
     return blocks;
-  }, [count, types]);
+  }, [count, types, seed]);
 
   return (
     <>
