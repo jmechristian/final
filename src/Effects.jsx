@@ -30,7 +30,6 @@ const Effects = () => {
         resolutionScale={1}
         velocityResolutionScale={1}
       />
-      d{' '}
     </EffectComposer>
   );
 };
