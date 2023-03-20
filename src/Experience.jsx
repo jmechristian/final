@@ -5,12 +5,17 @@ import {
   Environment,
   Cloud,
 } from '@react-three/drei';
+import useGame from './stores/useGame';
 import { Physics, Debug } from '@react-three/rapier';
 import { Level } from './Level.jsx';
 import Lights from './Lights.jsx';
 import Player from './Player.jsx';
 
 export default function Experience() {
+  const blocksCount = useGame((state) => {
+    return state.blocksCount;
+  });
+
   return (
     <>
       <Cloud
@@ -26,7 +31,7 @@ export default function Experience() {
       <Physics>
         <Lights />
         <Player />
-        <Level />
+        <Level count={blocksCount} />
       </Physics>
     </>
   );
